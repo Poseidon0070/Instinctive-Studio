@@ -1,6 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 
+// Import fonts
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -20,6 +21,23 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        {/* Preload fonts for faster loading */}
+        <link
+          rel="preload"
+          href="/fonts/GeistVF.woff"
+          as="font"
+          type="font/woff"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/GeistMonoVF.woff"
+          as="font"
+          type="font/woff"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -28,3 +46,141 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+// 'use client'
+// import { useState, useRef, useEffect } from 'react';
+// import { MdDeleteOutline } from "react-icons/md";
+// import { MdOutlineCloudDownload } from "react-icons/md";
+
+// export default function Home() {
+//   const [isRecording, setIsRecording] = useState(false);
+//   const [isPaused, setIsPaused] = useState(false); // New state for pausing
+//   const [countdown, setCountdown] = useState(null);
+//   const [audioData, setAudioData] = useState(null);
+
+//   const audioChunks = useRef([]); // Stores audio data
+//   const mediaRecorderRef = useRef(null);
+
+//   // Function to start recording with countdown
+//   const startRecordingCountdown = () => {
+//     setCountdown(3);
+//     let count = 3;
+//     const countdownInterval = setInterval(() => {
+//       count -= 1;
+//       setCountdown(count);
+//       if (count === 0) {
+//         clearInterval(countdownInterval);
+//         setCountdown(null);
+//         setIsRecording(true);
+//         startRecorder();
+//       }
+//     }, 1000);
+//   };
+
+//   // Stop recording
+//   const stopRecording = () => {
+//     if (mediaRecorderRef.current) {
+//       mediaRecorderRef.current.stop(); // Stop the MediaRecorder
+//     }
+//     setIsRecording(false);
+//     setIsPaused(false); // Reset paused state
+//   };
+
+//   // Pause or resume recording
+//   const togglePauseResume = () => {
+//     if (mediaRecorderRef.current) {
+//       if (isPaused) {
+//         mediaRecorderRef.current.resume(); // Resume recording
+//         setIsPaused(false); // Update paused state
+//       } else {
+//         mediaRecorderRef.current.pause(); // Pause recording
+//         setIsPaused(true); // Update paused state
+//       }
+//     }
+//   };
+
+//   // Start the media recorder and setup callbacks
+//   const startRecorder = async () => {
+//     try {
+//       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+//       const mediaRecorder = new MediaRecorder(stream);
+
+//       // Store the audio chunks
+//       mediaRecorder.ondataavailable = (e) => {
+//         if (e.data.size > 0) {
+//           audioChunks.current.push(e.data);
+//         }
+//       };
+
+//       // When recording is stopped, create the audio blob and URL
+//       mediaRecorder.onstop = () => {
+//         const audioBlob = new Blob(audioChunks.current, { type: 'audio/wav' });
+//         const audioUrl = URL.createObjectURL(audioBlob);
+//         setAudioData(audioUrl);
+
+//         // Reset audio chunks for the next recording
+//         audioChunks.current = [];
+//       };
+
+//       // Start recording
+//       mediaRecorder.start();
+//       mediaRecorderRef.current = mediaRecorder;
+//     } catch (error) {
+//       console.error('Error accessing microphone:', error);
+//     }
+//   };
+
+//   const deleteRecordingAndReset = () => {
+//     setAudioData(null);
+//     setIsRecording(false)
+//   }
+
+//   const downloadRecording = () => {
+//     if (audioData) {
+//       const a = document.createElement('a');
+//       a.href = audioData; 
+//       a.download = 'audio.wav'; 
+//       document.body.appendChild(a); 
+//       a.click(); 
+//       document.body.removeChild(a); 
+//     }
+//   }
+
+//   return (
+//     <div className="flex justify-center items-center w-screen h-screen">
+//       {/* Initial Button to Start Recording */}
+//       {!isRecording && !countdown && (
+//         <button onClick={startRecordingCountdown} className='button'>
+//           Babble
+//         </button>
+//       )}
+
+//       {/* Countdown display */}
+//       {countdown && <div className="recording">{countdown}</div>}
+
+//       {/* Pause/Resume and Stop buttons */}
+//       {isRecording && !countdown && (
+//         <div className='flex justify-center'>
+//           <div className='flex flex-col justify-center items-center'>
+//             <div className='flex justify-center items-center gap-20'>
+//               <div className='flex flex-col justify-center items-center gap-20'>
+//                 <button onClick={isPaused ? stopRecording : togglePauseResume} className='recording'>
+//                   {isPaused ? 'Done' : 'Stop'}
+//                 </button>
+//               </div>
+
+//             </div>
+//             <div className='flex gap-5'>
+//               <div className='delete' onClick={deleteRecordingAndReset}><MdDeleteOutline size={25} /></div>
+//             </div>
+//           </div>
+//           {isPaused && <button onClick={togglePauseResume} className='resume'>
+//             Resume
+//           </button>
+//           }
+//         </div>
+//       )}
+//       {audioData && <div className='download' onClick={downloadRecording}><MdOutlineCloudDownload size={25} /></div>}
+//     </div>
+//   );
+// }

@@ -16,6 +16,80 @@
 
 body {
   color: var(--foreground);
-  background: var(--background);
+  background: #134B70;
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+.button {
+  border: 1px solid rgb(185, 149, 64);
+  border-radius: 100%;
+  width: 200px;
+  height: 200px;
+  box-shadow: 0px 0px 100px -2px rgb(197, 177, 129);
+  color : rgb(254, 240, 52)
+}
+
+.recording {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(237, 239, 241);
+  border-radius: 100%;
+  width: 200px;
+  height: 200px;
+  color : black;
+  font-weight: bold;
+  font-size: large;
+}
+
+.resume {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(224, 152, 89);
+  border-radius: 100%;
+  width: 100px;
+  height: 100px;
+  color : black;
+  font-weight: bold;
+  font-size: large;
+  margin-top: 50px;
+  margin-left : 80px;
+}
+
+.delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(237, 239, 241);
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  color : black;
+  font-weight: bold;
+  font-size: large;
+  margin-top: 80px;
+}
+
+.download {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(237, 239, 241);
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  color : black;
+  font-weight: bold;
+  font-size: large;
+  position: absolute;
+  right: 20px;
+  bottom : 20px;
+}
+
+.dropdown {
+  position: absolute;
+  left: 20px;
+  top: 20px;
 }
