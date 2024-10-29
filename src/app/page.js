@@ -2,6 +2,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineCloudDownload } from "react-icons/md";
+import { LuNetwork } from "react-icons/lu";
+import { PiPlaylistLight } from "react-icons/pi";
 import Wavify from 'react-wavify';  // Import react-wavify
 
 export default function Home() {
@@ -139,7 +141,7 @@ export default function Home() {
       {!isPaused && isRecording && (
         <div className="absolute left-0 top-80 w-full z-0">
           <Wavify
-            fill="#FF4500"
+            fill="#ffb98a"
             paused={false}
             style={{ height: "600px" }}
             options={{
@@ -152,23 +154,34 @@ export default function Home() {
         </div>
       )}
 
-      <div className="flex justify-center items-center w-screen h-screen">
+      <div className="flex justify-center flex-col items-center w-screen h-screen">
         {!isRecording && !countdown && (
-          <button onClick={startRecordingCountdown} className='button'>
-            Babble
-          </button>
+          <>
+            <p className='babble-text'>Babble</p>
+            <div className='container'>
+            <button onClick={startRecordingCountdown} className='button'>
+              Babble
+            </button>
+            </div>
+            <div className='flex gap-6 mt-[-25px]'>
+              <button onClick={startRecordingCountdown} className='button-sm'>
+                <LuNetwork size={23} />
+              </button>
+              <button onClick={startRecordingCountdown} className='button-sm'>
+                <PiPlaylistLight size={25} />
+              </button>
+            </div>
+          </>
         )}
 
-        {/* Countdown display */}
         {countdown && <div className="recording">{countdown}</div>}
 
-        {/* Pause/Resume and Stop buttons */}
         {isRecording && !countdown && (
           <div className='flex justify-center z-10 relative'>
             <div className='flex flex-col justify-center items-center'>
               <div className='flex justify-center items-center gap-20'>
                 <div className='flex flex-col justify-center items-center gap-20'>
-                  <button onClick={isPaused ? stopRecording : togglePauseResume} className='recording'>
+                  <button onClick={isPaused ? stopRecording : togglePauseResume} className='stop-btn'>
                     {isPaused ? 'Done' : 'Stop'}
                   </button>
                 </div>
@@ -201,7 +214,6 @@ export default function Home() {
             </select>
           </div>
         </div>}
-
       </div>
     </>
   );

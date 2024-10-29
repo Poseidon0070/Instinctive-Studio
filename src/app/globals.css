@@ -2,61 +2,173 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
   color: var(--foreground);
-  background: #134B70;
-  font-family: Arial, Helvetica, sans-serif;
+  background: rgb(47, 72, 88);
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-weight: 500;
+  font-size: large;
   overflow: hidden;
 }
 
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+  width: 85vw;
+  border: 1px solid aliceblue;
+  border-radius: 5px;
+}
+
+.babble-text{
+  font-family: 'Dancing Script', cursive;
+  font-size: larger;
+  color:aliceblue;
+  margin-bottom: 30px;
+}
+
 .button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid rgb(185, 149, 64);
-  border-radius: 100%;
+  border-radius: 50%;
   width: 200px;
   height: 200px;
-  box-shadow: 0px 0px 100px -2px rgb(197, 177, 129);
-  color : rgb(254, 240, 52)
+  box-shadow: 0px 0px 20px rgba(239, 206, 129, 0.3);
+  color: rgb(198, 131, 73);
+  background-color: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 0.3s;
 }
+
+.button::before,
+.button::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgb(185, 149, 64);
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.button::before {
+  width: 170px;
+  height: 170px;
+}
+
+.button::after {
+  width: 140px;
+  height: 140px;
+  transform: scale(1.21); /* Starts at 170px size */
+}
+
+.button:hover::before,
+.button:hover::after {
+  opacity: 1;
+}
+
+.button:hover::after {
+  transform: scale(1); /* Scale down to 140px */
+}
+
+.button:hover {
+  box-shadow: 0px 0px 40px rgba(239, 206, 129, 0.5); 
+}
+
 
 .recording {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgb(237, 239, 241);
-  border-radius: 100%;
+  border-radius: 50%;
   width: 200px;
   height: 200px;
   color : black;
-  font-weight: bold;
-  font-size: large;
 }
 
-.resume {
+.stop-btn {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(224, 152, 89);
-  border-radius: 100%;
-  width: 100px;
-  height: 100px;
-  color : black;
-  font-weight: bold;
-  font-size: large;
-  margin-top: 50px;
-  margin-left : 80px;
+  background-color: rgb(237, 239, 241);
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  color: black;
+  transition: color 0.3s;
+  overflow: hidden;
 }
+
+.stop-btn::before,
+.stop-btn::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgb(185, 149, 64);
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+
+.stop-btn::after {
+  width: 140px;
+  height: 140px;
+  transform: scale(1.21); /* Start at 170px */
+}
+
+.stop-btn:hover::before,
+.stop-btn:hover::after {
+  opacity: 1;
+}
+
+.stop-btn:hover::after {
+  transform: scale(1); /* Scale down to 140px */
+}
+
+.stop-btn:hover {
+  color: rgb(185, 149, 64);
+}
+
+
+.resume {
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffb98a;
+  border-radius: 50%; 
+  width: 110px;
+  height: 110px;
+  color: black;
+  margin-top: 50px;
+  margin-left: 80px;
+  transition: color 0.3s; 
+}
+
+.resume::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  width: 110px; 
+  height: 110px; 
+  border: 1px solid black; 
+  opacity: 0;
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.resume:hover::before {
+  opacity: 1; 
+  transform: scale(0.8);
+}
+
+
 
 .delete {
   display: flex;
@@ -66,10 +178,26 @@ body {
   border-radius: 100%;
   width: 50px;
   height: 50px;
-  color : black;
-  font-weight: bold;
-  font-size: large;
   margin-top: 80px;
+  color : rgb(185, 149, 64);
+}
+
+.button-sm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(47, 72, 88);
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  color : rgb(185, 149, 64);
+  border: 1px solid aliceblue;
+  transition: 0.5s;
+}
+
+.button-sm:hover {
+  background-color: rgb(185, 149, 64);
+  color: black;
 }
 
 .download {
@@ -81,7 +209,6 @@ body {
   width: 50px;
   height: 50px;
   color : black;
-  font-weight: bold;
   font-size: large;
   position: absolute;
   right: 20px;
@@ -93,3 +220,4 @@ body {
   left: 20px;
   top: 20px;
 }
+
