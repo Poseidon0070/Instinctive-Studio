@@ -215,9 +215,18 @@ body {
   bottom : 20px;
 }
 
+.download:hover{
+  background-color: rgb(185, 149, 64);
+  color:red;
+}
+
 .dropdown {
   position: absolute;
   left: 20px;
   top: 20px;
 }
 
+.rectangle{
+  background-color: #ffb98a;
+  z-index: -1;
+}

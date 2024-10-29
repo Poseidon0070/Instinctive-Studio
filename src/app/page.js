@@ -13,7 +13,8 @@ export default function Home() {
   const [audioData, setAudioData] = useState(null);
   const [amplitude, setAmplitude] = useState(40); 
   const [frequencyAmplitude, setFrequencyAmplitude] = useState(40); 
-  const [waveformType, setWaveformType] = useState("Amplitude")
+  const [waveformType, setWaveformType] = useState("Amplitude");
+  const [rectangleHeight, setRectangleHeight] = useState(0);  
 
   const audioChunks = useRef([]);
   const mediaRecorderRef = useRef(null);
@@ -30,10 +31,12 @@ export default function Home() {
 
   const startRecordingCountdown = () => {
     setCountdown(3);
+    setRectangleHeight(0); 
     let count = 3;
     const countdownInterval = setInterval(() => {
       count -= 1;
       setCountdown(count);
+      setRectangleHeight((3 - count) * (window.innerHeight / 5)); 
       if (count === 0) {
         clearInterval(countdownInterval);
         setCountdown(null);
@@ -89,9 +92,10 @@ export default function Home() {
         audioChunks.current = [];
       };
 
+      // start the recording
       mediaRecorder.start();
       mediaRecorderRef.current = mediaRecorder;
-      updateWaveform();
+
     } catch (error) {
       console.error('Error accessing microphone:', error);
     }
@@ -103,19 +107,17 @@ export default function Home() {
 
     const update = () => {
       if (!isPaused && analyser) {
-        // Get audio data for amplitude calculation
         analyser.getByteTimeDomainData(dataArray.current);
         const averageAmplitude = dataArray.current.reduce((sum, value) => sum + value, 0) / dataArray.current.length;
         setAmplitude(averageAmplitude); 
 
-        // Get frequency data for audio strength modification
         analyser.getByteFrequencyData(frequencyData.current);
         const averageFrequencyAmplitude = frequencyData.current.reduce((sum, value) => sum + value, 0) / frequencyData.current.length;
         setFrequencyAmplitude((averageFrequencyAmplitude) * 10); 
       }
       requestAnimationFrame(update); 
     };
-    update(); // Start the first call
+    update(); 
   };
 
   const deleteRecordingAndReset = () => {
@@ -138,6 +140,14 @@ export default function Home() {
 
   return (
     <>
+      {/* Rectangle animation during countdown */}
+      {countdown !== null && (
+        <div 
+          className="rectangle absolute bottom-0 left-0 w-full transition-all duration-1000 ease-in-out" 
+          style={{ height: `${rectangleHeight}px` }}
+        />
+      )}
+
       {!isPaused && isRecording && (
         <div className="absolute left-0 top-80 w-full z-0">
           <Wavify
